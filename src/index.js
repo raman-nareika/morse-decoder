@@ -35,10 +35,33 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
+    ' ':      ' '
 };
 
 function decode(expr) {
-    // write your solution here
+    let res = "";
+
+    for(let i = 0; i < expr.length; i += 10) {
+        let morseChar = toMorseChar(expr.substring(i, i + 10));
+        let char = MORSE_TABLE[morseChar];
+        res += char;
+    }
+    return res;
+}
+
+const toMorseChar = function(encoded) {
+    if(encoded === "**********") {
+        return " ";
+    } else {
+        let res = "";
+        const trimmed = encoded.replace(/^0+/g, "");
+
+        for(let i = 0; i < trimmed.length; i += 2) {
+            let part = trimmed.substring(i, i + 2);
+            res += (part === "11" ? "-" : ".");
+        }
+        return res;
+    }
 }
 
 module.exports = {
